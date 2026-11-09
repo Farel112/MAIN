@@ -1,6 +1,14 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { Dimensions, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  Dimensions,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const { width } = Dimensions.get("window");
 
@@ -8,14 +16,16 @@ export default function HomeScreen() {
   const router = useRouter();
 
   return (
-    <SafeAreaView className="flex-1 bg-[#f9faf5]">
+    <SafeAreaView style={{ flex: 1 }} className="bg-[#f9faf5] relative">
       {/* Header */}
       <View className="flex-row justify-between items-center px-5 h-[60px] bg-[#f9faf5]/90 z-10">
         <View className="flex-row items-center">
           <View className="mr-2">
             <Text className="text-xl font-black color-[#153328]">ruang.</Text>
           </View>
-          <Text className="text-[11px] font-bold tracking-widest color-[#414844]">MEMBER</Text>
+          <Text className="text-[11px] font-bold tracking-widest color-[#414844]">
+            MEMBER
+          </Text>
         </View>
         <View className="flex-row items-center">
           <TouchableOpacity className="w-10 h-10 justify-center items-center mr-2">
@@ -30,9 +40,12 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      <ScrollView className="flex-1"
-       contentContainerClassName="flex-grow pb-28"
-       showsVerticalScrollIndicator={false}>
+      {/* Scrollable Content Area */}
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 110 }}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Hero Section */}
         <View className="bg-[#153328] rounded-b-[32px] px-5 pt-6 pb-[40px]">
           <View className="flex-row items-center bg-[#cced4b]/15 px-2.5 py-1 rounded-xl self-start mb-3">
@@ -167,12 +180,13 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </View>
         </View>
-
-        <View className="h-[100px]" />
       </ScrollView>
 
       {/* Bottom Navigation */}
-      <View className="absolute bottom-0 w-full flex-row justify-around items-center h-[80px] bg-[#f9faf5] pb-5 border-t border-[#f3f4ef]">
+      <View
+        style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}
+        className="flex-row justify-around items-center h-[80px] bg-[#f9faf5] pb-5 border-t border-[#f3f4ef] z-20"
+      >
         <NavItem icon="grid-view" label="Beranda" isActive onPress={() => {}} />
         <NavItem
           icon="swap-horiz"
@@ -237,7 +251,11 @@ const TransactionItem = ({
       <Text className={`text-sm font-bold ${isPositive ? "color-[#536500]" : "color-[#1a1c19]"}`}>
         {amount}
       </Text>
-      <Text className={`text-[11px] mt-0.5 ${isPositive ? "color-[#536500] font-bold" : "color-[#727974]"}`}>
+      <Text
+        className={`text-[11px] mt-0.5 ${
+          isPositive ? "color-[#536500] font-bold" : "color-[#727974]"
+        }`}
+      >
         {status}
       </Text>
     </View>

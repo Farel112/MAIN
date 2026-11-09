@@ -3,25 +3,27 @@ import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import {
     Image,
-    SafeAreaView,
     ScrollView,
     Text,
     TouchableOpacity,
     View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ProfileScreen() {
   const router = useRouter();
 
   return (
-    <SafeAreaView className="flex-1 bg-[#f9faf5]">
+    <SafeAreaView style={{ flex: 1 }} className="bg-[#f9faf5] relative">
       <StatusBar style="dark" />
 
       {/* Header Bar */}
-      <View className="flex-row justify-between items-center px-5 h-[56px] bg-[#f9faf5]">
+      <View className="flex-row justify-between items-center px-5 h-[56px] bg-[#f9faf5] z-10">
         <View className="flex-row items-center">
           <Text className="text-xl font-black color-[#153328] mr-2">ruang.</Text>
-          <Text className="text-[11px] font-bold tracking-widest color-[#414844]">MEMBER</Text>
+          <Text className="text-[11px] font-bold tracking-widest color-[#414844]">
+            MEMBER
+          </Text>
         </View>
         <View className="flex-row items-center">
           <TouchableOpacity className="w-10 h-10 justify-center items-center mr-1">
@@ -36,9 +38,12 @@ export default function ProfileScreen() {
         </View>
       </View>
 
-      <ScrollView className="flex-1"
-       contentContainerClassName="flex-grow pb-28"
-       showsVerticalScrollIndicator={false}>
+      {/* Scrollable Content Area */}
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 110 }}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Top Member Hero Card */}
         <View className="bg-[#153328] rounded-b-[28px] px-5 pt-4 pb-6 relative overflow-hidden">
           <Text className="absolute -right-2.5 -top-[20px] text-[130px] font-black color-white/5">
@@ -75,11 +80,11 @@ export default function ProfileScreen() {
             </View>
 
             <View className="flex-1">
-              <Text className="text-xl font-extrabold color-white">Chicarito Amanda</Text>
+              <Text className="text-xl font-extrabold color-white">Fariel</Text>
               <View className="flex-row items-center mt-0.5">
-                <Text className="text-xs font-bold color-[#cff04d]">@chicarito</Text>
+                <Text className="text-xs font-bold color-[#cff04d]">@fariel</Text>
                 <Text className="color-white/40 mx-1">•</Text>
-                <Text className="text-xs color-white/80">chicarito@ruang.id</Text>
+                <Text className="text-xs color-white/80">fariel@ruang.id</Text>
               </View>
               <Text className="text-xs color-white/70 mt-0.5">+62 812-3456-7890</Text>
             </View>
@@ -89,7 +94,7 @@ export default function ProfileScreen() {
           <View className="flex-row justify-between items-center bg-black/20 rounded-[14px] px-3.5 py-2.5 mt-4">
             <View className="flex-row items-center">
               <MaterialIcons name="workspace-premium" size={18} color="#cff04d" />
-              <Text className="text-xs color-white/90 ml-1.5">Bergabung Jan 2024</Text>
+              <Text className="text-xs color-white/90 ml-1.5">Bergabung Oktober 2026</Text>
             </View>
             <View className="flex-row items-center">
               <Text className="text-[10px] font-extrabold color-white/70 tracking-widest mr-1.5">
@@ -103,7 +108,7 @@ export default function ProfileScreen() {
         </View>
 
         {/* Content Section Container */}
-        <View className="px-5 pt-5 pb-[100px]">
+        <View className="px-5 pt-5">
           {/* Card Portfolio Terhubung */}
           <View className="bg-white rounded-[20px] p-4 mb-5 elevation-sm shadow-black/5">
             <View className="flex-row justify-between items-center">
@@ -194,7 +199,7 @@ export default function ProfileScreen() {
               <MenuItem
                 icon="tune"
                 title="Batas Transaksi Harian"
-                subtitle="Rp50.000.000 / hari"
+                subtitle="Rp100.000.000 / hari"
               />
               <View className="h-[1px] bg-[#f3f4ef] mx-4" />
               <MenuItem
@@ -259,13 +264,18 @@ export default function ProfileScreen() {
             <Text className="text-[9px] font-extrabold color-[#414844] tracking-widest">
               — RUANG UNTUK TUMBUH, SETIAP HARI —
             </Text>
-            <Text className="text-[11px] color-[#727974]">Versi 2.4.0 • Edisi Ruang Member</Text>
+            <Text className="text-[11px] color-[#727974]">
+              Versi 2.4.0 • Edisi Ruang Member
+            </Text>
           </View>
         </View>
       </ScrollView>
 
       {/* Bottom Navigation */}
-      <View className="absolute bottom-0 w-full flex-row justify-around items-center h-[80px] bg-[#f9faf5] pb-5 border-t border-[#f3f4ef]">
+      <View
+        style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}
+        className="flex-row justify-around items-center h-[80px] bg-[#f9faf5] pb-5 border-t border-[#f3f4ef] z-20"
+      >
         <NavItem
           icon="grid-view"
           label="Beranda"
@@ -341,7 +351,7 @@ const NavItem = ({ icon, label, isActive, onPress }: NavItemProps) => (
     />
     <Text
       className={`text-[11px] mt-1 ${
-        isActive ? "color-[#153328] font-bold" : "color-[#414844]"
+        isActive ? "#153328 font-bold" : "color-[#414844]"
       }`}
     >
       {label}
