@@ -1,300 +1,262 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import { Dimensions, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-const { width } = Dimensions.get('window');
-
-const colors = {
-  surface: '#f9faf5',
-  surfaceContainerLowest: '#ffffff',
-  surfaceContainerLow: '#f3f4ef',
-  surfaceContainerHigh: '#e7e9e4',
-  onSurface: '#1a1c19',
-  onSurfaceVariant: '#414844',
-  outline: '#727974',
-  primaryContainer: '#153328',
-  onPrimary: '#ffffff',
-  secondaryContainer: '#cced4b',
-  onSecondaryContainer: '#576a00',
-  secondaryFixed: '#cff04d',
-  primaryFixedDim: '#adcebe',
-  tertiaryFixed: '#ffdad4',
-  tertiary: '#3b0200',
-  error: '#ba1a1a',
-};
+const { width } = Dimensions.get("window");
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView className="flex-1 bg-[#f9faf5]">
       {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <View style={styles.logoPlaceholder}>
-            <Text style={styles.logoText}>ruang.</Text>
+      <View className="flex-row justify-between items-center px-5 h-[60px] bg-[#f9faf5]/90 z-10">
+        <View className="flex-row items-center">
+          <View className="mr-2">
+            <Text className="text-xl font-black color-[#153328]">ruang.</Text>
           </View>
-          <Text style={styles.headerTitle}>MEMBER</Text>
+          <Text className="text-[11px] font-bold tracking-widest color-[#414844]">MEMBER</Text>
         </View>
-        <View style={styles.headerRight}>
-          <TouchableOpacity style={styles.iconButton}>
-            <MaterialIcons name="notifications-none" size={24} color={colors.onSurface} />
+        <View className="flex-row items-center">
+          <TouchableOpacity className="w-10 h-10 justify-center items-center mr-2">
+            <MaterialIcons name="notifications-none" size={24} color="#1a1c19" />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Image 
-              source={{ uri: 'https://via.placeholder.com/150' }} 
-              style={styles.profilePic} 
+          <TouchableOpacity onPress={() => router.push("/profile" as any)}>
+            <Image
+              source={{ uri: "https://via.placeholder.com/150" }}
+              className="w-8 h-8 rounded-full"
             />
           </TouchableOpacity>
         </View>
       </View>
 
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView className="flex-1"
+       contentContainerClassName="flex-grow pb-28"
+       showsVerticalScrollIndicator={false}>
         {/* Hero Section */}
-        <View style={styles.heroSection}>
-          <View style={styles.welcomeBadge}>
-            <View style={styles.pulseDot} />
-            <Text style={styles.welcomeBadgeText}>SELAMAT DATANG KEMBALI</Text>
+        <View className="bg-[#153328] rounded-b-[32px] px-5 pt-6 pb-[40px]">
+          <View className="flex-row items-center bg-[#cced4b]/15 px-2.5 py-1 rounded-xl self-start mb-3">
+            <View className="w-1.5 h-1.5 rounded-full bg-[#cced4b] mr-1.5" />
+            <Text className="text-[10px] font-bold color-[#cff04d] tracking-widest">
+              SELAMAT DATANG KEMBALI
+            </Text>
           </View>
-          <Text style={styles.heroTitle}>Senang melihatmu lagi, Fariel.</Text>
-          <Text style={styles.heroSubtitle}>Lanjutkan hal baik yang sedang kamu bangun bersama ruang.</Text>
+          <Text className="text-[28px] font-extrabold color-white mb-2">
+            Senang melihatmu lagi, Fariel.
+          </Text>
+          <Text className="text-xs color-[#adcebe] leading-[18px]">
+            Lanjutkan hal baik yang sedang kamu bangun bersama ruang.
+          </Text>
         </View>
 
-        {/* Ikhtisar Utama - Horizontal Scroll */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitleOverline}>IKHTISAR UTAMA</Text>
-          <View style={styles.carouselDots}>
-            <View style={[styles.dot, styles.dotActive]} />
-            <View style={styles.dot} />
-            <View style={styles.dot} />
+        {/* Ikhtisar Utama */}
+        <View className="flex-row justify-between items-center px-5 mt-5 mb-3">
+          <Text className="text-[11px] font-bold color-[#414844] tracking-widest">
+            IKHTISAR UTAMA
+          </Text>
+          <View className="flex-row items-center">
+            <View className="w-4 h-1.5 rounded-full bg-[#153328] ml-1" />
+            <View className="w-1.5 h-1.5 rounded-full bg-[#727974] ml-1" />
+            <View className="w-1.5 h-1.5 rounded-full bg-[#727974] ml-1" />
           </View>
         </View>
 
-        <ScrollView 
-          horizontal 
-          showsHorizontalScrollIndicator={false} 
-          contentContainerStyle={styles.carouselContainer}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 12, paddingBottom: 16 }}
           snapToInterval={width * 0.85 + 16}
           decelerationRate="fast"
         >
           {/* Card 1: Saldo */}
-          <View style={styles.card}>
-            <View style={styles.cardTop}>
-              <View style={styles.cardHeaderLeft}>
-                <View style={styles.iconBox}>
-                  <MaterialIcons name="account-balance-wallet" size={20} color={colors.primaryContainer} />
+          <View
+            style={{ width: width * 0.85 }}
+            className="bg-white rounded-[24px] p-4 mx-2 h-[190px] justify-between elevation-sm shadow-black/5"
+          >
+            <View className="flex-row justify-between">
+              <View className="flex-row items-center">
+                <View className="w-8 h-8 rounded-lg bg-[#f3f4ef] justify-center items-center mr-2">
+                  <MaterialIcons name="account-balance-wallet" size={20} color="#153328" />
                 </View>
                 <View>
-                  <Text style={styles.cardOverline}>TOTAL SALDO</Text>
-                  <Text style={styles.cardSubText}>3 rekening terhubung</Text>
+                  <Text className="text-[11px] font-bold color-[#414844]">TOTAL SALDO</Text>
+                  <Text className="text-[11px] color-[#727974]">3 rekening terhubung</Text>
                 </View>
               </View>
-              <View style={styles.trendBadge}>
-                <MaterialIcons name="trending-up" size={14} color={colors.onSecondaryContainer} />
-                <Text style={styles.trendText}>+12.4%</Text>
+              <View className="flex-row items-center bg-[#cff04d] px-2 py-1 rounded-xl">
+                <MaterialIcons name="trending-up" size={14} color="#576a00" />
+                <Text className="text-xs font-bold color-[#576a00] ml-1">+12.4%</Text>
               </View>
             </View>
-            <View style={styles.cardMiddle}>
-              <Text style={styles.currencyText}>IDR</Text>
-              <Text style={styles.balanceText}>Rp 42.850.000</Text>
+
+            <View className="mt-4">
+              <Text className="text-xs color-[#414844]">IDR</Text>
+              <Text className="text-[26px] font-extrabold color-[#1a1c19]">Rp 42.850.000</Text>
             </View>
-            <View style={styles.cardBottom}>
-              <View style={styles.statusRow}>
-                <View style={styles.statusDot} />
-                <Text style={styles.statusText}>Arus kas optimal bulan ini</Text>
+
+            <View className="flex-row justify-between items-center mt-4">
+              <View className="flex-row items-center">
+                <View className="w-2 h-2 rounded-full bg-[#cced4b] mr-1.5" />
+                <Text className="text-xs color-[#414844]">Arus kas optimal bulan ini</Text>
               </View>
-              <MaterialIcons name="arrow-forward" size={18} color={colors.primaryContainer} />
+              <MaterialIcons name="arrow-forward" size={18} color="#153328" />
             </View>
           </View>
         </ScrollView>
 
         {/* Riwayat Transaksi */}
-        <View style={styles.contentSection}>
-          <View style={styles.sectionHeaderRow}>
+        <View className="px-5 mt-6">
+          <View className="flex-row justify-between items-center mb-3">
             <View>
-              <Text style={styles.sectionTitle}>Riwayat Transaksi</Text>
-              <Text style={styles.sectionSubtitle}>Aktivitas keuangan terbaru kamu</Text>
+              <Text className="text-lg font-bold color-[#1a1c19]">Riwayat Transaksi</Text>
+              <Text className="text-xs color-[#414844]">Aktivitas keuangan terbaru kamu</Text>
             </View>
-            <TouchableOpacity style={styles.seeAllButton}>
-              <Text style={styles.seeAllText}>Lihat Semua</Text>
+            <TouchableOpacity className="bg-[#e7e9e4] px-3 py-1.5 rounded-xl">
+              <Text className="text-xs font-bold color-[#153328]">Lihat Semua</Text>
             </TouchableOpacity>
           </View>
 
-          <View style={styles.listContainer}>
-            <TransactionItem 
-              icon="local-cafe" 
-              title="Kopi & Coworking Space" 
-              time="Hari ini, 10:15 • Gaya Hidup" 
-              amount="-Rp 55.000" 
-              status="Sukses" 
+          <View className="bg-white rounded-2xl p-2">
+            <TransactionItem
+              icon="local-cafe"
+              title="Kopi & Coworking Space"
+              time="Hari ini, 10:15 • Gaya Hidup"
+              amount="-Rp 55.000"
+              status="Sukses"
             />
-            <TransactionItem 
-              icon="payments" 
-              title="Transfer Masuk - Studio Klien" 
-              time="Kemarin, 16:30 • Pendapatan" 
-              amount="+Rp 7.500.000" 
-              status="Diterima" 
-              isPositive 
+            <TransactionItem
+              icon="payments"
+              title="Transfer Masuk - Studio Klien"
+              time="Kemarin, 16:30 • Pendapatan"
+              amount="+Rp 7.500.000"
+              status="Diterima"
+              isPositive
             />
           </View>
         </View>
 
         {/* Financial Insight */}
-        <View style={styles.contentSection}>
-          <View style={styles.insightHeader}>
-            <View style={styles.insightIconBox}>
-              <MaterialIcons name="lightbulb" size={16} color={colors.primaryContainer} />
+        <View className="px-5 mt-6">
+          <View className="flex-row items-center mb-3">
+            <View className="w-7 h-7 rounded-full bg-[#cced4b] justify-center items-center mr-2">
+              <MaterialIcons name="lightbulb" size={16} color="#153328" />
             </View>
-            <Text style={styles.sectionTitle}>Financial Insight</Text>
+            <Text className="text-lg font-bold color-[#1a1c19]">Financial Insight</Text>
           </View>
-          
-          <View style={styles.insightCard}>
-            <View style={styles.insightTopRow}>
-              <Text style={styles.insightOverline}>ANALISIS BULAN INI</Text>
-              <View style={styles.insightMonthBadge}>
-                <Text style={styles.insightMonthText}>Oktober 2026</Text>
+
+          <View className="bg-[#153328] rounded-[24px] p-5">
+            <View className="flex-row justify-between items-center mb-3">
+              <Text className="text-[11px] font-bold color-[#cff04d] tracking-widest">
+                ANALISIS BULAN INI
+              </Text>
+              <View className="bg-[#e2e3de]/20 px-2 py-1 rounded-xl">
+                <Text className="text-[11px] color-[#adcebe]">Oktober 2026</Text>
               </View>
             </View>
-            <Text style={styles.insightBody}>
-              Pengeluaran gaya hidupmu hemat <Text style={{color: colors.secondaryFixed, fontWeight: 'bold'}}>18%</Text> dibandingkan bulan lalu! Kamu siap menambah alokasi tabungan dana darurat.
+            <Text className="text-sm color-[#f9faf5] leading-[22px] mb-5">
+              Pengeluaran gaya hidupmu hemat{" "}
+              <Text className="color-[#cff04d] font-bold">18%</Text> dibandingkan bulan lalu!
+              Kamu siap menambah alokasi tabungan dana darurat.
             </Text>
-            
-            <TouchableOpacity style={styles.primaryButton}>
-              <Text style={styles.primaryButtonText}>Pelajari Rincian Insight</Text>
-              <MaterialIcons name="arrow-forward" size={18} color={colors.primaryContainer} />
+
+            <TouchableOpacity className="bg-[#cced4b] flex-row justify-center items-center h-12 rounded-xl">
+              <Text className="text-sm font-bold color-[#153328] mr-2">
+                Pelajari Rincian Insight
+              </Text>
+              <MaterialIcons name="arrow-forward" size={18} color="#153328" />
             </TouchableOpacity>
           </View>
         </View>
-        
-        <View style={{height: 100}} />
+
+        <View className="h-[100px]" />
       </ScrollView>
 
       {/* Bottom Navigation */}
-      <View style={styles.bottomNav}>
-        <NavItem icon="grid-view" label="Beranda" isActive />
-        <NavItem icon="swap-horiz" label="Transaksi" />
-        <NavItem icon="track-changes" label="Target" />
-        <NavItem icon="menu-book" label="Edukasi" />
-        <NavItem icon="account-circle" label="Akun" />
+      <View className="absolute bottom-0 w-full flex-row justify-around items-center h-[80px] bg-[#f9faf5] pb-5 border-t border-[#f3f4ef]">
+        <NavItem icon="grid-view" label="Beranda" isActive onPress={() => {}} />
+        <NavItem
+          icon="swap-horiz"
+          label="Transaksi"
+          onPress={() => router.push("/transaksi" as any)}
+        />
+        <NavItem icon="track-changes" label="Target" onPress={() => {}} />
+        <NavItem icon="menu-book" label="Edukasi" onPress={() => {}} />
+        <NavItem
+          icon="account-circle"
+          label="Akun"
+          onPress={() => router.push("/profile" as any)}
+        />
       </View>
     </SafeAreaView>
   );
 }
 
-// ---------------------------------------------
-// TYPESCRIPT INTERFACES
-// ---------------------------------------------
-
 interface TransactionItemProps {
-  icon: any; 
+  icon: any;
   title: string;
   time: string;
   amount: string;
   status: string;
-  isPositive?: boolean; // Tanda '?' membuatnya menjadi opsional
+  isPositive?: boolean;
 }
 
 interface NavItemProps {
   icon: any;
   label: string;
-  isActive?: boolean; // Tanda '?' membuatnya menjadi opsional
+  isActive?: boolean;
+  onPress?: () => void;
 }
 
-// ---------------------------------------------
-// COMPONENTS
-// ---------------------------------------------
-
-const TransactionItem = ({ icon, title, time, amount, status, isPositive }: TransactionItemProps) => (
-  <View style={styles.transactionItem}>
-    <View style={styles.transactionLeft}>
-      <View style={[styles.transactionIcon, isPositive && {backgroundColor: 'rgba(207, 240, 77, 0.4)'}]}>
-        <MaterialIcons name={icon} size={20} color={isPositive ? colors.onSecondaryContainer : colors.primaryContainer} />
+const TransactionItem = ({
+  icon,
+  title,
+  time,
+  amount,
+  status,
+  isPositive,
+}: TransactionItemProps) => (
+  <View className="flex-row justify-between items-center p-3 rounded-xl">
+    <View className="flex-row items-center">
+      <View
+        className={`w-10 h-10 rounded-xl justify-center items-center mr-3 ${
+          isPositive ? "bg-[#cff04d]/40" : "bg-[#f3f4ef]"
+        }`}
+      >
+        <MaterialIcons
+          name={icon}
+          size={20}
+          color={isPositive ? "#576a00" : "#153328"}
+        />
       </View>
       <View>
-        <Text style={styles.transactionTitle}>{title}</Text>
-        <Text style={styles.transactionTime}>{time}</Text>
+        <Text className="text-sm font-bold color-[#1a1c19]">{title}</Text>
+        <Text className="text-xs color-[#727974] mt-0.5">{time}</Text>
       </View>
     </View>
-    <View style={styles.transactionRight}>
-      <Text style={[styles.transactionAmount, isPositive && {color: '#536500'}]}>{amount}</Text>
-      <Text style={[styles.transactionStatus, isPositive && {color: '#536500', fontWeight: 'bold'}]}>{status}</Text>
+    <View className="items-end">
+      <Text className={`text-sm font-bold ${isPositive ? "color-[#536500]" : "color-[#1a1c19]"}`}>
+        {amount}
+      </Text>
+      <Text className={`text-[11px] mt-0.5 ${isPositive ? "color-[#536500] font-bold" : "color-[#727974]"}`}>
+        {status}
+      </Text>
     </View>
   </View>
 );
 
-const NavItem = ({ icon, label, isActive }: NavItemProps) => (
-  <TouchableOpacity style={styles.navItem}>
-    <MaterialIcons name={icon} size={24} color={isActive ? colors.primaryContainer : colors.onSurfaceVariant} />
-    <Text style={[styles.navLabel, isActive && styles.navLabelActive]}>{label}</Text>
+const NavItem = ({ icon, label, isActive, onPress }: NavItemProps) => (
+  <TouchableOpacity className="items-center justify-center flex-1" onPress={onPress}>
+    <MaterialIcons
+      name={icon}
+      size={24}
+      color={isActive ? "#153328" : "#414844"}
+    />
+    <Text
+      className={`text-[11px] mt-1 ${
+        isActive ? "color-[#153328] font-bold" : "color-[#414844]"
+      }`}
+    >
+      {label}
+    </Text>
   </TouchableOpacity>
 );
-
-// ---------------------------------------------
-// STYLES
-// ---------------------------------------------
-
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: colors.surface },
-  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, height: 60, backgroundColor: 'rgba(249, 250, 245, 0.9)', zIndex: 10 },
-  headerLeft: { flexDirection: 'row', alignItems: 'center' },
-  logoPlaceholder: { marginRight: 8 },
-  logoText: { fontSize: 20, fontWeight: '900', color: colors.primaryContainer },
-  headerTitle: { fontSize: 11, fontWeight: '700', letterSpacing: 1.5, color: colors.onSurfaceVariant },
-  headerRight: { flexDirection: 'row', alignItems: 'center' },
-  iconButton: { width: 40, height: 40, justifyContent: 'center', alignItems: 'center', marginRight: 8 },
-  profilePic: { width: 32, height: 32, borderRadius: 16 },
-  scrollView: { flex: 1 },
-  heroSection: { backgroundColor: colors.primaryContainer, borderBottomLeftRadius: 32, borderBottomRightRadius: 32, paddingHorizontal: 20, paddingTop: 24, paddingBottom: 40 },
-  welcomeBadge: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(204, 237, 75, 0.15)', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12, alignSelf: 'flex-start', marginBottom: 12 },
-  pulseDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: colors.secondaryContainer, marginRight: 6 },
-  welcomeBadgeText: { fontSize: 10, fontWeight: 'bold', color: colors.secondaryFixed, letterSpacing: 1.2 },
-  heroTitle: { fontSize: 28, fontWeight: '800', color: colors.onPrimary, marginBottom: 8 },
-  heroSubtitle: { fontSize: 12, color: colors.primaryFixedDim, lineHeight: 18 },
-  sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, marginTop: 20, marginBottom: 12 },
-  sectionTitleOverline: { fontSize: 11, fontWeight: 'bold', color: colors.onSurfaceVariant, letterSpacing: 1.2 },
-  carouselDots: { flexDirection: 'row', alignItems: 'center' },
-  dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: colors.outline, marginLeft: 4 },
-  dotActive: { width: 16, backgroundColor: colors.primaryContainer },
-  carouselContainer: { paddingHorizontal: 12, paddingBottom: 16 },
-  card: { width: width * 0.85, backgroundColor: colors.surfaceContainerLowest, borderRadius: 24, padding: 16, marginHorizontal: 8, height: 190, justifyContent: 'space-between', elevation: 2, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 8 },
-  cardTop: { flexDirection: 'row', justifyContent: 'space-between' },
-  cardHeaderLeft: { flexDirection: 'row', alignItems: 'center' },
-  iconBox: { width: 32, height: 32, borderRadius: 8, backgroundColor: colors.surfaceContainerLow, justifyContent: 'center', alignItems: 'center', marginRight: 8 },
-  cardOverline: { fontSize: 11, fontWeight: 'bold', color: colors.onSurfaceVariant },
-  cardSubText: { fontSize: 11, color: colors.outline },
-  trendBadge: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.secondaryFixed, paddingHorizontal: 8, paddingVertical: 4, borderRadius: 12 },
-  trendText: { fontSize: 12, fontWeight: 'bold', color: colors.onSecondaryContainer, marginLeft: 4 },
-  cardMiddle: { marginTop: 16 },
-  currencyText: { fontSize: 12, color: colors.onSurfaceVariant },
-  balanceText: { fontSize: 26, fontWeight: '800', color: colors.onSurface },
-  cardBottom: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 16 },
-  statusRow: { flexDirection: 'row', alignItems: 'center' },
-  statusDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: colors.secondaryContainer, marginRight: 6 },
-  statusText: { fontSize: 12, color: colors.onSurfaceVariant },
-  contentSection: { paddingHorizontal: 20, marginTop: 24 },
-  sectionHeaderRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
-  sectionTitle: { fontSize: 18, fontWeight: 'bold', color: colors.onSurface },
-  sectionSubtitle: { fontSize: 12, color: colors.onSurfaceVariant },
-  seeAllButton: { backgroundColor: colors.surfaceContainerHigh, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 12 },
-  seeAllText: { fontSize: 12, fontWeight: 'bold', color: colors.primaryContainer },
-  listContainer: { backgroundColor: colors.surfaceContainerLowest, borderRadius: 16, padding: 8 },
-  transactionItem: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 12, borderRadius: 12 },
-  transactionLeft: { flexDirection: 'row', alignItems: 'center' },
-  transactionIcon: { width: 40, height: 40, borderRadius: 12, backgroundColor: colors.surfaceContainerLow, justifyContent: 'center', alignItems: 'center', marginRight: 12 },
-  transactionTitle: { fontSize: 14, fontWeight: 'bold', color: colors.onSurface },
-  transactionTime: { fontSize: 12, color: colors.outline, marginTop: 2 },
-  transactionRight: { alignItems: 'flex-end' },
-  transactionAmount: { fontSize: 14, fontWeight: 'bold', color: colors.onSurface },
-  transactionStatus: { fontSize: 11, color: colors.outline, marginTop: 2 },
-  insightHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
-  insightIconBox: { width: 28, height: 28, borderRadius: 14, backgroundColor: colors.secondaryContainer, justifyContent: 'center', alignItems: 'center', marginRight: 8 },
-  insightCard: { backgroundColor: colors.primaryContainer, borderRadius: 24, padding: 20 },
-  insightTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
-  insightOverline: { fontSize: 11, fontWeight: 'bold', color: colors.secondaryFixed, letterSpacing: 1.2 },
-  insightMonthBadge: { backgroundColor: 'rgba(226, 227, 222, 0.2)', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 12 },
-  insightMonthText: { fontSize: 11, color: colors.primaryFixedDim },
-  insightBody: { fontSize: 14, color: colors.surface, lineHeight: 22, marginBottom: 20 },
-  primaryButton: { backgroundColor: colors.secondaryContainer, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 48, borderRadius: 12 },
-  primaryButtonText: { fontSize: 14, fontWeight: 'bold', color: colors.primaryContainer, marginRight: 8 },
-  bottomNav: { position: 'absolute', bottom: 0, width: '100%', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', height: 80, backgroundColor: colors.surface, paddingBottom: 20, borderTopWidth: 1, borderTopColor: colors.surfaceContainerLow },
-  navItem: { alignItems: 'center', justifyContent: 'center', flex: 1 },
-  navLabel: { fontSize: 11, marginTop: 4, color: colors.onSurfaceVariant },
-  navLabelActive: { color: colors.primaryContainer, fontWeight: 'bold' }
-});

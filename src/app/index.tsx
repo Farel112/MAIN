@@ -6,91 +6,151 @@ import {
   Platform,
   Pressable,
   ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Index() {
+export default function Registrasi() {
   const router = useRouter();
 
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(true);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [agreeTerms, setAgreeTerms] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [message, setMessage] = useState("");
 
   function handleSubmit() {
-    if (!email.trim() || !password) {
-      setMessage("Isi email dan kata sandi.");
+    if (!fullName.trim() || !email.trim() || !phone.trim() || !password || !confirmPassword) {
+      setMessage("Harap lengkapi semua bidang isian.");
       return;
     }
     if (!/^\S+@\S+\.\S+$/.test(email.trim())) {
       setMessage("Periksa kembali format alamat email kamu.");
       return;
     }
+    if (password !== confirmPassword) {
+      setMessage("Konfirmasi kata sandi tidak cocok.");
+      return;
+    }
+    if (!agreeTerms) {
+      setMessage("Kamu harus menyetujui Syarat & Ketentuan.");
+      return;
+    }
+
+    setMessage("");
     router.replace("/home");
   }
 
   return (
-    <SafeAreaView edges={["top", "bottom"]} style={styles.safeArea}>
+    <SafeAreaView edges={["top", "bottom"]} className="flex-1 bg-[#FAFBF7]">
       <StatusBar style="dark" />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
-        style={styles.keyboardView}
+        className="flex-1"
       >
         <ScrollView
-          contentContainerStyle={styles.scrollContent}
+          contentContainerStyle={{ flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          <View style={styles.page}>
-            <View style={styles.hero}>
-              <View style={styles.brandRow}>
-                <View style={styles.brandMark}>
-                  <View style={styles.brandMarkInner} />
+          <View className="w-full max-w-[560px] self-center flex-grow">
+            {/* Top Bar */}
+            <View className="flex-row items-center justify-between px-5 py-3">
+              <Pressable onPress={() => router.back()} className="p-1">
+                <Text className="text-2xl color-[#163327] font-bold">‹</Text>
+              </Pressable>
+              <Text className="text-base font-bold color-[#163327]">daftar</Text>
+              <View className="w-8 h-8 rounded-full bg-[#3B82F6] items-center justify-center">
+                <Text className="text-sm color-white">👁</Text>
+              </View>
+            </View>
+
+            {/* Hero Section */}
+            <View className="min-h-[250px] px-6 pt-5 pb-6 bg-[#163327] rounded-[28px] mx-4 overflow-hidden relative">
+              <View className="flex-row items-center h-9">
+                <View className="w-[26px] h-[26px] border border-white/50 rounded-lg items-center justify-center -rotate-6">
+                  <View className="w-2.5 h-2.5 bg-[#D2F543] rounded-[2px]" />
                 </View>
-                <Text style={styles.brandName}>ruang.</Text>
-                <Text style={styles.brandTag}>MEMBER SPACE</Text>
-              </View>
-              <View style={styles.heroCopy}>
-                <Text style={styles.eyebrow}>SELAMAT DATANG KEMBALI</Text>
-                <Text style={styles.title}>
-                  Senang melihatmu{"\n"}
-                  <Text style={styles.titleAccent}>lagi.</Text>
-                </Text>
-                <Text style={styles.subtitle}>
-                  Masuk dan lanjutkan hal baik yang sedang kamu bangun.
+                <Text className="ml-2 color-white text-lg font-extrabold">ruang.</Text>
+                <Text className="ml-auto color-white/60 text-[9px] font-bold tracking-widest">
+                  MEMBER SPACE
                 </Text>
               </View>
-              <View pointerEvents="none" style={styles.heroArtwork}>
-                <Text style={styles.artworkNumber}>01</Text>
-                <View style={styles.artworkRule} />
-                <View style={styles.artworkTile}>
-                  <View style={styles.artworkTileTop} />
-                  <View style={styles.artworkTileBottom} />
+
+              <View className="mt-5.5 max-w-[300px] z-10">
+                <Text className="mb-2 color-[#D2F543] text-[10px] font-extrabold tracking-widest">
+                  MULAI LANGKAH BARU
+                </Text>
+                <Text className="color-white text-[28px] leading-8 font-extrabold">
+                  Mulai ruang untuk{"\n"}masa depanmu.
+                </Text>
+                <Text className="mt-2 color-white/75 text-xs leading-[18px]">
+                  Daftarkan akun dan kelola finansial secara terarah bersama ruang.
+                </Text>
+              </View>
+
+              <View pointerEvents="none" className="absolute right-[20px] top-[80px] w-[90px] h-[130px] items-end">
+                <Text className="color-white/10 text-[60px] leading-[68px] font-black">02</Text>
+                <View className="absolute right-[10px] top-[15px] w-[1px] h-[70px] bg-[#E78166] rotate-[30deg]" />
+                <View className="absolute right-[3px] bottom-[10px] w-9 h-9 p-1.5 bg-[#D2F543] rounded-lg rotate-[6deg] justify-between">
+                  <View className="w-3 h-[3px] bg-[#163327]" />
+                  <View className="w-[20px] h-[3px] bg-[#163327]" />
                 </View>
               </View>
             </View>
 
-            <View style={styles.formSection}>
-              <View style={styles.formHeading}>
-                <Text style={styles.formTitle}>Masuk ke akun</Text>
-                <Text style={styles.formHint}>Senang kamu kembali.</Text>
+            {/* Form Section */}
+            <View className="flex-grow px-6 pt-6 pb-[22px]">
+              <View className="mb-[20px]">
+                <Text className="color-[#163327] text-[22px] font-extrabold">Daftar akun</Text>
+                <Text className="mt-1 color-[#64748B] text-xs">
+                  Isi data berikut untuk memulai perjalananmu.
+                </Text>
               </View>
 
-              <View style={styles.fieldGroup}>
-                <Text style={styles.fieldLabel}>ALAMAT EMAIL</Text>
+              {/* Input Nama Lengkap */}
+              <View className="mb-[14px]">
+                <Text className="mb-[6px] color-[#163327] text-[10px] font-extrabold tracking-widest">
+                  NAMA LENGKAP
+                </Text>
                 <View
-                  style={[
-                    styles.inputShell,
-                    focusedField === "email" && styles.inputShellFocused,
-                  ]}
+                  className={`min-h-[50px] flex-row items-center px-[14px] border rounded-[16px] bg-white ${
+                    focusedField === "fullName" ? "border-[#163327]" : "border-[#ECEEE5]"
+                  }`}
                 >
-                  <Text style={styles.inputPrefix}>@</Text>
+                  <Text className="w-[22px] text-xs">👤</Text>
+                  <TextInput
+                    autoCapitalize="words"
+                    onBlur={() => setFocusedField(null)}
+                    onChangeText={setFullName}
+                    onFocus={() => setFocusedField("fullName")}
+                    placeholder="contoh: Amanda Putri"
+                    placeholderTextColor="#67756B"
+                    returnKeyType="next"
+                    className="flex-1 h-[48px] px-1 color-[#163327] text-sm"
+                    value={fullName}
+                  />
+                </View>
+              </View>
+
+              {/* Input Email */}
+              <View className="mb-[14px]">
+                <Text className="mb-[6px] color-[#163327] text-[10px] font-extrabold tracking-widest">
+                  ALAMAT EMAIL
+                </Text>
+                <View
+                  className={`min-h-[50px] flex-row items-center px-[14px] border rounded-[16px] bg-white ${
+                    focusedField === "email" ? "border-[#163327]" : "border-[#ECEEE5]"
+                  }`}
+                >
+                  <Text className="w-[22px] color-[#163327] text-sm font-bold">@</Text>
                   <TextInput
                     autoCapitalize="none"
                     autoComplete="email"
@@ -98,111 +158,158 @@ export default function Index() {
                     onBlur={() => setFocusedField(null)}
                     onChangeText={setEmail}
                     onFocus={() => setFocusedField("email")}
-                    onSubmitEditing={() => setFocusedField("password")}
                     placeholder="nama@email.com"
-                    placeholderTextColor={colors.muted}
+                    placeholderTextColor="#67756B"
                     returnKeyType="next"
-                    style={styles.input}
+                    className="flex-1 h-[48px] px-1 color-[#163327] text-sm"
                     value={email}
                   />
                 </View>
               </View>
 
-              <View style={styles.fieldGroup}>
-                <Text style={styles.fieldLabel}>KATA SANDI</Text>
+              {/* Input Nomor Ponsel */}
+              <View className="mb-[14px]">
+                <Text className="mb-[6px] color-[#163327] text-[10px] font-extrabold tracking-widest">
+                  NOMOR PONSEL
+                </Text>
                 <View
-                  style={[
-                    styles.inputShell,
-                    focusedField === "password" && styles.inputShellFocused,
-                  ]}
+                  className={`min-h-[50px] flex-row items-center px-[14px] border rounded-[16px] bg-white ${
+                    focusedField === "phone" ? "border-[#163327]" : "border-[#ECEEE5]"
+                  }`}
                 >
-                  <Text style={styles.lockMark}>◆</Text>
+                  <Text className="w-[22px] text-xs">📱</Text>
+                  <TextInput
+                    keyboardType="phone-pad"
+                    onBlur={() => setFocusedField(null)}
+                    onChangeText={setPhone}
+                    onFocus={() => setFocusedField("phone")}
+                    placeholder="0812 3456 7890"
+                    placeholderTextColor="#67756B"
+                    returnKeyType="next"
+                    className="flex-1 h-[48px] px-1 color-[#163327] text-sm"
+                    value={phone}
+                  />
+                </View>
+              </View>
+
+              {/* Input Kata Sandi */}
+              <View className="mb-[14px]">
+                <Text className="mb-[6px] color-[#163327] text-[10px] font-extrabold tracking-widest">
+                  KATA SANDI
+                </Text>
+                <View
+                  className={`min-h-[50px] flex-row items-center px-[14px] border rounded-[16px] bg-white ${
+                    focusedField === "password" ? "border-[#163327]" : "border-[#ECEEE5]"
+                  }`}
+                >
+                  <Text className="w-[22px] color-[#163327] text-[10px]">◆</Text>
                   <TextInput
                     autoCapitalize="none"
-                    autoComplete="current-password"
                     onBlur={() => setFocusedField(null)}
                     onChangeText={setPassword}
                     onFocus={() => setFocusedField("password")}
-                    onSubmitEditing={handleSubmit}
-                    placeholder="Masukkan kata sandi"
-                    placeholderTextColor={colors.muted}
-                    returnKeyType="done"
+                    placeholder="Buat kata sandi baru"
+                    placeholderTextColor="#67756B"
+                    returnKeyType="next"
                     secureTextEntry={!showPassword}
-                    style={styles.input}
+                    className="flex-1 h-[48px] px-1 color-[#163327] text-sm"
                     value={password}
                   />
                   <Pressable
-                    accessibilityLabel={
-                      showPassword ? "Sembunyikan kata sandi" : "Lihat kata sandi"
-                    }
-                    accessibilityRole="button"
-                    onPress={() => setShowPassword((visible) => !visible)}
-                    style={styles.visibilityButton}
+                    onPress={() => setShowPassword((v) => !v)}
+                    className="min-h-[40px] justify-center pl-2"
                   >
-                    <Text style={styles.visibilityText}>
+                    <Text className="color-[#163327] text-xs font-bold">
                       {showPassword ? "Tutup" : "Lihat"}
                     </Text>
                   </Pressable>
                 </View>
               </View>
 
-              <View style={styles.formOptions}>
+              {/* Konfirmasi Kata Sandi */}
+              <View className="mb-[14px]">
+                <Text className="mb-[6px] color-[#163327] text-[10px] font-extrabold tracking-widest">
+                  KONFIRMASI KATA SANDI
+                </Text>
+                <View
+                  className={`min-h-[50px] flex-row items-center px-[14px] border rounded-[16px] bg-white ${
+                    focusedField === "confirmPassword" ? "border-[#163327]" : "border-[#ECEEE5]"
+                  }`}
+                >
+                  <Text className="w-[22px] color-[#163327] text-[10px]">◆</Text>
+                  <TextInput
+                    autoCapitalize="none"
+                    onBlur={() => setFocusedField(null)}
+                    onChangeText={setConfirmPassword}
+                    onFocus={() => setFocusedField("confirmPassword")}
+                    placeholder="Ulangi kata sandi"
+                    placeholderTextColor="#67756B"
+                    returnKeyType="done"
+                    secureTextEntry={!showConfirmPassword}
+                    className="flex-1 h-[48px] px-1 color-[#163327] text-sm"
+                    value={confirmPassword}
+                  />
+                  <Pressable
+                    onPress={() => setShowConfirmPassword((v) => !v)}
+                    className="min-h-[40px] justify-center pl-2"
+                  >
+                    <Text className="color-[#163327] text-xs font-bold">
+                      {showConfirmPassword ? "Tutup" : "Lihat"}
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+
+              {/* Terms Checkbox */}
+              <View className="flex-row items-start mt-1 mb-3">
                 <Pressable
-                  accessibilityRole="checkbox"
-                  accessibilityState={{ checked: rememberMe }}
-                  onPress={() => setRememberMe((checked) => !checked)}
-                  style={styles.rememberButton}
+                  onPress={() => setAgreeTerms((checked) => !checked)}
+                  className="min-h-[36px] justify-center mr-2"
                 >
                   <View
-                    style={[styles.checkbox, rememberMe && styles.checkboxChecked]}
+                    className={`w-[18px] h-[18px] items-center justify-center border rounded-[5px] mt-[1px] ${
+                      agreeTerms ? "border-[#163327] bg-[#163327]" : "border-[#CBD5E1]"
+                    }`}
                   >
-                    {rememberMe && <Text style={styles.checkmark}>✓</Text>}
+                    {agreeTerms && <Text className="color-white text-[11px] font-bold">✓</Text>}
                   </View>
-                  <Text style={styles.rememberText}>Ingat saya</Text>
                 </Pressable>
-                <Pressable
-                  accessibilityRole="button"
-                  onPress={() => setMessage("Fitur lupa kata sandi belum tersedia.")}
-                  hitSlop={8}
-                >
-                  <Text style={styles.forgotText}>Lupa kata sandi?</Text>
-                </Pressable>
+                <Text className="flex-1 color-[#475569] text-xs leading-[18px]">
+                  Saya menyetujui{" "}
+                  <Text className="font-bold color-[#163327] underline">Syarat & Ketentuan</Text>{" "}
+                  serta{" "}
+                  <Text className="font-bold color-[#163327] underline">Kebijakan Privasi</Text>{" "}
+                  ruang.
+                </Text>
               </View>
 
-              {message ? (
-                <Text style={styles.message} accessibilityLiveRegion="polite">
-                  {message}
-                </Text>
-              ) : null}
+              {message ? <Text className="mb-3 color-[#DC2626] text-xs">{message}</Text> : null}
 
+              <Text className="color-[#64748B] text-[11px] mb-3">
+                Lengkapi data di atas untuk melanjutkan registrasi.
+              </Text>
+
+              {/* Submit Button */}
               <Pressable
-                accessibilityRole="button"
                 onPress={handleSubmit}
-                style={({ pressed }) => [
-                  styles.submitButton,
-                  pressed && styles.submitButtonPressed,
-                ]}
+                className="min-h-[52px] flex-row items-center justify-center rounded-[16px] bg-[#163327] active:bg-[#1A382C] mt-1 relative"
               >
-                <Text style={styles.submitText}>Masuk</Text>
-                <Text style={styles.submitArrow}>→</Text>
+                <Text className="color-white text-base font-bold">Daftar Sekarang</Text>
+                <Text className="absolute right-4.5 color-[#D2F543] text-xl">→</Text>
               </Pressable>
 
-              <View style={styles.signupRow}>
-                <Text style={styles.signupPrompt}>Belum punya akun?</Text>
-                <Pressable
-                  accessibilityRole="button"
-                  onPress={() => {setMessage("");
-                  router.push("/registrasi" as any);
-                }}
-                  hitSlop={8}
-                >
-                  <Text style={styles.signupLink}>Daftar sekarang</Text>
+              <View className="min-h-[48px] flex-row items-center justify-center gap-1.5 mt-3">
+                <Text className="color-[#64748B] text-xs">Sudah punya akun?</Text>
+                <Pressable onPress={() => router.back()} hitSlop={8}>
+                  <Text className="color-[#163327] text-xs font-bold">Masuk sekarang</Text>
                 </Pressable>
               </View>
 
-              <View style={styles.footer}>
-                <View style={styles.footerLine} />
-                <Text style={styles.footerText}>RUANG UNTUK TUMBUH, SETIAP HARI</Text>
+              <View className="flex-row items-center justify-center mt-6 pt-3">
+                <View className="w-5 h-[2px] mr-2 bg-[#E78166]" />
+                <Text className="color-[#94A3B8] text-[9px] font-extrabold tracking-widest">
+                  RUANG UNTUK TUMBUH, SETIAP HARI
+                </Text>
               </View>
             </View>
           </View>
@@ -211,70 +318,3 @@ export default function Index() {
     </SafeAreaView>
   );
 }
-
-const colors = {
-  paper: "#F3F5EF",
-  ink: "#173A31",
-  forest: "#173A31",
-  forestLight: "#295447",
-  muted: "#8B958E",
-  lime: "#DDF06A",
-  coral: "#E78166",
-  line: "#DDE3DB",
-  white: "#FFFFFF",
-};
-
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: colors.paper },
-  keyboardView: { flex: 1 },
-  scrollContent: { flexGrow: 1 },
-  page: { width: "100%", maxWidth: 560, alignSelf: "center", flexGrow: 1 },
-  hero: { minHeight: 282, paddingHorizontal: 28, paddingTop: 22, paddingBottom: 30, backgroundColor: colors.forest, borderBottomLeftRadius: 30, borderBottomRightRadius: 30, overflow: "hidden" },
-  brandRow: { flexDirection: "row", alignItems: "center", height: 42 },
-  brandMark: { width: 34, height: 34, borderWidth: 1, borderColor: "rgba(255,255,255,0.48)", borderRadius: 11, alignItems: "center", justifyContent: "center", transform: [{ rotate: "-8deg" }] },
-  brandMarkInner: { width: 12, height: 12, backgroundColor: colors.lime, borderRadius: 3 },
-  brandName: { marginLeft: 10, color: colors.white, fontSize: 20, fontWeight: "700", letterSpacing: 0 },
-  brandTag: { marginLeft: "auto", color: "#C0D0C7", fontSize: 9, fontWeight: "700", letterSpacing: 1.1 },
-  heroCopy: { marginTop: 28, maxWidth: 330, zIndex: 1 },
-  eyebrow: { marginBottom: 10, color: colors.lime, fontSize: 10, fontWeight: "700", letterSpacing: 1.4 },
-  title: { color: colors.white, fontSize: 34, lineHeight: 38, fontWeight: "700", letterSpacing: 0 },
-  titleAccent: { color: colors.lime },
-  subtitle: { marginTop: 10, maxWidth: 285, color: "#C0D0C7", fontSize: 14, lineHeight: 21 },
-  heroArtwork: { position: "absolute", right: 23, top: 99, width: 94, height: 138, alignItems: "flex-end" },
-  artworkNumber: { color: "rgba(255,255,255,0.09)", fontSize: 56, lineHeight: 65, fontWeight: "700" },
-  artworkRule: { position: "absolute", right: 11, top: 15, width: 1, height: 76, backgroundColor: colors.coral, transform: [{ rotate: "30deg" }] },
-  artworkTile: { position: "absolute", right: 3, bottom: 0, width: 38, height: 38, padding: 6, backgroundColor: colors.lime, transform: [{ rotate: "8deg" }], justifyContent: "space-between" },
-  artworkTileTop: { width: 12, height: 3, backgroundColor: colors.forest },
-  artworkTileBottom: { width: 24, height: 3, backgroundColor: colors.forest },
-  formSection: { flexGrow: 1, paddingHorizontal: 28, paddingTop: 27, paddingBottom: 22 },
-  formHeading: { marginBottom: 22 },
-  formTitle: { color: colors.ink, fontSize: 22, lineHeight: 28, fontWeight: "700", letterSpacing: 0 },
-  formHint: { marginTop: 3, color: "#77847C", fontSize: 14 },
-  fieldGroup: { marginBottom: 17 },
-  fieldLabel: { marginBottom: 8, color: "#53655B", fontSize: 10, fontWeight: "700", letterSpacing: 1.1 },
-  inputShell: { minHeight: 54, flexDirection: "row", alignItems: "center", paddingHorizontal: 15, borderWidth: 1, borderColor: colors.line, borderRadius: 12, backgroundColor: colors.white },
-  inputShellFocused: { borderColor: colors.forestLight },
-  inputPrefix: { width: 22, color: colors.forestLight, fontSize: 17, fontWeight: "600" },
-  lockMark: { width: 22, color: colors.forestLight, fontSize: 10 },
-  input: { flex: 1, height: 52, paddingHorizontal: 3, color: colors.ink, fontSize: 14 },
-  visibilityButton: { minHeight: 44, justifyContent: "center", paddingLeft: 8 },
-  visibilityText: { color: colors.forestLight, fontSize: 12, fontWeight: "700" },
-  formOptions: { minHeight: 28, flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: -1, marginBottom: 16 },
-  rememberButton: { minHeight: 40, flexDirection: "row", alignItems: "center" },
-  checkbox: { width: 18, height: 18, alignItems: "center", justifyContent: "center", borderWidth: 1, borderColor: "#AAB5AC", borderRadius: 5 },
-  checkboxChecked: { borderColor: colors.forest, backgroundColor: colors.forest },
-  checkmark: { color: colors.white, fontSize: 12, lineHeight: 16, fontWeight: "700" },
-  rememberText: { marginLeft: 8, color: "#53655B", fontSize: 12 },
-  forgotText: { color: colors.forestLight, fontSize: 12, fontWeight: "700" },
-  message: { marginBottom: 12, color: colors.forestLight, fontSize: 12, lineHeight: 18 },
-  submitButton: { minHeight: 54, flexDirection: "row", alignItems: "center", justifyContent: "center", borderRadius: 12, backgroundColor: colors.forest },
-  submitButtonPressed: { backgroundColor: colors.forestLight },
-  submitText: { color: colors.white, fontSize: 15, fontWeight: "700" },
-  submitArrow: { position: "absolute", right: 18, color: colors.lime, fontSize: 22, lineHeight: 26 },
-  signupRow: { minHeight: 52, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 5 },
-  signupPrompt: { color: "#77847C", fontSize: 12 },
-  signupLink: { color: colors.forestLight, fontSize: 12, fontWeight: "700" },
-  footer: { flexDirection: "row", alignItems: "center", justifyContent: "center", marginTop: "auto", paddingTop: 15 },
-  footerLine: { width: 20, height: 2, marginRight: 8, backgroundColor: colors.coral },
-  footerText: { color: "#89958C", fontSize: 9, fontWeight: "700", letterSpacing: 1 },
-});
