@@ -191,7 +191,9 @@ export default function Index() {
                 <Text style={styles.signupPrompt}>Belum punya akun?</Text>
                 <Pressable
                   accessibilityRole="button"
-                  onPress={() => setMessage("Pendaftaran akun belum tersedia.")}
+                  onPress={() => {setMessage("");
+                  router.push("/registrasi" as any);
+                }}
                   hitSlop={8}
                 >
                   <Text style={styles.signupLink}>Daftar sekarang</Text>
